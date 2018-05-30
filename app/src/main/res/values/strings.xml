@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Wats</string>
+    <string name="title_reviews">Reviews</string>
+    <string name="title_forum">Forum</string>
+    <string name="title_events">Events</string>
+    <string name="title_ads">Ads</string>
+    <string name="wats_api_secured_path">http://localhost:8080/api</string>
+    <string name="wats_api_public_path">https://demo2452597.mockable.io/api/public/</string>
+</resources>

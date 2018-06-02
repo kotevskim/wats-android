@@ -1,21 +1,28 @@
-package com.kote.martin.wats
+package com.kote.martin.wats.adapters
 
 import android.content.Context
+
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.kote.martin.wats.R
 
 
-import com.kote.martin.wats.ReviewsFragment.OnListFragmentInteractionListener
+import com.kote.martin.wats.fragments.ReviewsFragment.OnListFragmentInteractionListener
 import com.kote.martin.wats.dummy.DummyContent.DummyItem
 import com.kote.martin.wats.model.Review
 import com.squareup.picasso.Picasso
 
 import kotlinx.android.synthetic.main.fragment_reviews.view.*
+import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormatter
 import java.util.*
+import org.joda.time.format.DateTimeFormat
+
+
 
 /**
  * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
@@ -32,7 +39,7 @@ class ReviewsRecyclerViewAdapter(
 
     init {
         mOnClickListener = View.OnClickListener { v ->
-            val item = v.tag as DummyItem
+            val item = v.tag as Review
             // Notify the active callbacks interface (the activity, if the fragment is attached to
             // one) that an item has been selected.
             mListener?.onListFragmentInteraction(item)
@@ -50,7 +57,11 @@ class ReviewsRecyclerViewAdapter(
         val item = data[position]
         holder.idView.text = item.id.toString()
         holder.personNameView.text = item.user.name
-        holder.dateView.text = item.datePublished
+//        val fmt = DateTimeFormat.forPattern("MMM dd, yy | HH:mm")
+        holder.dateView.text =  item.datePublished
+                .substring(0, 16)
+                .replace('T', ' ')
+                .replace('-', '.') // fmt.print(item.datePublished)
         holder.descView.text = item.description
         Picasso
                 .with(context)

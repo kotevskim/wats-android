@@ -3,12 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list"
-    android:name="com.kote.martin.wats.ReviewsFragment"
+    android:name="com.kote.martin.wats.fragments.ForumQuestionFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".fragments.ReviewsFragment"
-    tools:listitem="@layout/fragment_reviews" />
-
-    <!--android:layout_marginLeft="8dp"-->
-    <!--android:layout_marginRight="8dp"-->
+    tools:context=".fragments.ForumQuestionFragment"
+    tools:listitem="@layout/fragment_forumquestion" />

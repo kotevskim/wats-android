@@ -1,4 +1,4 @@
-package com.kote.martin.wats
+package com.kote.martin.wats.fragments
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -11,8 +11,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.kote.martin.wats.R
+import com.kote.martin.wats.adapters.ReviewsRecyclerViewAdapter
 
 import com.kote.martin.wats.dummy.DummyContent.DummyItem
+import com.kote.martin.wats.model.Item
 import com.kote.martin.wats.model.Review
 import com.kote.martin.wats.presentation.MyViewModel
 
@@ -27,9 +30,7 @@ class ReviewsFragment : Fragment() {
 
     // TODO: Customize parameters
     private var columnCount = 1
-
     private var reviewsAdapter: ReviewsRecyclerViewAdapter? = null
-
     private var listener: OnListFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,7 +41,7 @@ class ReviewsFragment : Fragment() {
         }
 
         reviewsAdapter = ReviewsRecyclerViewAdapter(listener, context)
-        val mViewModel: MyViewModel = ViewModelProviders.of(this).get(MyViewModel::class.java)
+        val mViewModel: MyViewModel = ViewModelProviders.of(activity!!).get(MyViewModel::class.java)
         mViewModel.getReviews().observe(this, Observer<List<Review>> {
             if (it != null) reviewsAdapter?.setData(it)
         })
@@ -90,7 +91,7 @@ class ReviewsFragment : Fragment() {
      */
     interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: DummyItem?)
+        fun onListFragmentInteraction(item: Item?)
     }
 
     companion object {

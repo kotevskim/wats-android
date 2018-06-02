@@ -2,16 +2,26 @@ package com.kote.martin.wats
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import com.kote.martin.wats.dummy.DummyContent
+import com.kote.martin.wats.fragments.ForumQuestionFragment
+import com.kote.martin.wats.fragments.ReviewsFragment
+import com.kote.martin.wats.model.Item
 import kotlinx.android.synthetic.main.activity_place.*
 
 
-class PlaceActivity : AppCompatActivity() , ReviewsFragment.OnListFragmentInteractionListener {
+class PlaceActivity : AppCompatActivity() , ReviewsFragment.OnListFragmentInteractionListener, ForumQuestionFragment.OnListFragmentInteractionListener {
 
     private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
         when (item.itemId) {
             R.id.navigation_home -> {
+                val fragmentManager = supportFragmentManager
+                val transaction = fragmentManager.beginTransaction()
+                val fragment = ForumQuestionFragment()
+                transaction.replace(R.id.fragment_container, fragment)
+                transaction.addToBackStack(null);
+                transaction.commit();
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_dashboard -> {
@@ -38,7 +48,8 @@ class PlaceActivity : AppCompatActivity() , ReviewsFragment.OnListFragmentIntera
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
     }
 
-    override fun onListFragmentInteraction(item: DummyContent.DummyItem?) {
+    override fun onListFragmentInteraction(item: Item?) {
         println("YEEEE")
     }
+
 }

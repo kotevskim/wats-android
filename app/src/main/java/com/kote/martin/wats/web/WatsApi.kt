@@ -1,5 +1,6 @@
 package com.kote.martin.wats.web
 
+import com.kote.martin.wats.model.ForumQuestion
 import com.kote.martin.wats.model.Page
 import com.kote.martin.wats.model.Review
 import retrofit2.Call
@@ -10,4 +11,7 @@ interface WatsApi {
 
     @GET("locations/{locationId}/reviews")
     fun getReviewsForLocation(@Path("locationId") id: Long): Call<Page<Review>>
+
+    @GET("locations/{locationId}/forum/questions")
+    fun getForumQuestionsForLocation(@Path("locationId") id: Long): Call<Page<ForumQuestion>>
 }

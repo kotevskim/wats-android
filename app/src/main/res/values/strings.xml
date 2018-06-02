@@ -6,4 +6,5 @@
     <string name="title_ads">Ads</string>
     <string name="wats_api_secured_path">http://localhost:8080/api</string>
     <string name="wats_api_public_path">https://demo2452597.mockable.io/api/public/</string>
+    <string name="connection_problem">Could not connect to the server, check you internet connection</string>
 </resources>

@@ -56,7 +56,7 @@ class ReviewsRecyclerViewAdapter(
                 .with(context)
                 .load(item.user.pictureUrl)
                 .placeholder(R.mipmap.ic_launcher)
-                .into(holder.personPhotoView);
+                .into(holder.personPhotoView)
 
         with(holder.mView) {
             tag = item
@@ -67,8 +67,8 @@ class ReviewsRecyclerViewAdapter(
     override fun getItemCount(): Int = data.size
 
     fun setData(data: List<Review>) {
-        this.data = data;
-        notifyDataSetChanged();
+        this.data = data
+        notifyDataSetChanged()
     }
 
 

@@ -16,12 +16,11 @@ class PlaceActivity : AppCompatActivity() , ReviewsFragment.OnListFragmentIntera
             }
             R.id.navigation_dashboard -> {
                 val fragmentManager = supportFragmentManager
-                val fragmentTransaction = fragmentManager.beginTransaction()
+                val transaction = fragmentManager.beginTransaction()
                 val fragment = ReviewsFragment()
-                fragmentTransaction.add(R.id.fragment_container, fragment)
-//                fragmentTransaction.replace(R.id.fragment_container, fragment);
-//                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+                transaction.replace(R.id.fragment_container, fragment)
+                transaction.addToBackStack(null);
+                transaction.commit();
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation_notifications -> {

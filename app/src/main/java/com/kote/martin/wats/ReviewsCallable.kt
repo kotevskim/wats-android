@@ -16,22 +16,11 @@ class ReviewsCallable(val apiBasePath: String) : Callable<List<Review>> {
                     .build()
             val api = retrofit.create(WatsApi::class.java)
             val call = api.getReviewsForLocation(1L)
-//        try {
             val reviews: List<Review>? = call.execute().body()?.content
-            return reviews;
+            return reviews
         } catch (e: Exception) {
-            e.printStackTrace();
+            e.printStackTrace()
             return null;
         }
-
-//        val api = retrofit.create(WatsApi::class.java)
-//        val call = api.getReviewsForLocation(1L)
-////        try {
-//        val reviews: List<Review>? = call.execute().body()?.content
-//        return reviews;
-//        } catch (e: IOException) {
-//            e.printStackTrace()
-//            return null;
-//        }
     }
 }

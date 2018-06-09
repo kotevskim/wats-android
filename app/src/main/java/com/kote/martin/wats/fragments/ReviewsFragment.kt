@@ -14,12 +14,8 @@ import android.view.ViewGroup
 import com.kote.martin.wats.R
 import com.kote.martin.wats.adapters.ReviewsRecyclerViewAdapter
 
-import com.kote.martin.wats.dummy.DummyContent.DummyItem
-import com.kote.martin.wats.model.Item
 import com.kote.martin.wats.model.Review
 import com.kote.martin.wats.presentation.MyViewModel
-
-
 
 /**
  * A fragment representing a list of Items.
@@ -28,7 +24,6 @@ import com.kote.martin.wats.presentation.MyViewModel
  */
 class ReviewsFragment : Fragment() {
 
-    // TODO: Customize parameters
     private var columnCount = 1
     private var reviewsAdapter: ReviewsRecyclerViewAdapter? = null
     private var listener: OnListFragmentInteractionListener? = null
@@ -90,16 +85,13 @@ class ReviewsFragment : Fragment() {
      * for more information.
      */
     interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: Item?)
+        fun onListFragmentInteraction(review: Review)
     }
 
     companion object {
 
-        // TODO: Customize parameter argument names
         const val ARG_COLUMN_COUNT = "column-count"
 
-        // TODO: Customize parameter initialization
         @JvmStatic
         fun newInstance(columnCount: Int) =
                 ReviewsFragment().apply {

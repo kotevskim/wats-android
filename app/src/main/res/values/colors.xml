@@ -5,4 +5,6 @@
     <color name="colorAccent">#FF4081</color>
     <color name="implicit">#e1e6ed</color>
     <color name="light">#f7fcfb</color>
+    <color name="black">#000</color>
+    <color name="dark_grey">#545556</color>
 </resources>

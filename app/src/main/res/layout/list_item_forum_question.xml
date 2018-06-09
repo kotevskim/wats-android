@@ -8,7 +8,7 @@
     android:paddingStart="5dp"
     android:layout_marginBottom="4dp"
     android:layout_marginTop="4dp"
-    android:background="@drawable/textlines"
+    android:background="@drawable/border_bottom"
     android:color="@color/colorAccent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">

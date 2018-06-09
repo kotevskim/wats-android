@@ -12,23 +12,12 @@ import com.kote.martin.wats.R
 
 
 import com.kote.martin.wats.fragments.ReviewsFragment.OnListFragmentInteractionListener
-import com.kote.martin.wats.dummy.DummyContent.DummyItem
 import com.kote.martin.wats.model.Review
 import com.squareup.picasso.Picasso
 
-import kotlinx.android.synthetic.main.fragment_reviews.view.*
-import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormatter
+import kotlinx.android.synthetic.main.list_item_review.view.*
 import java.util.*
-import org.joda.time.format.DateTimeFormat
 
-
-
-/**
- * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
- * specified [OnListFragmentInteractionListener].
- * TODO: Replace the implementation with code for your data type.
- */
 class ReviewsRecyclerViewAdapter(
         private val mListener: OnListFragmentInteractionListener?,
         private val context: Context?)
@@ -49,7 +38,7 @@ class ReviewsRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.fragment_reviews, parent, false)
+                .inflate(R.layout.list_item_review, parent, false)
         return ViewHolder(view)
     }
 

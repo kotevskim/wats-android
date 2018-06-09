@@ -14,14 +14,9 @@ import com.kote.martin.wats.fragments.ForumQuestionFragment.OnListFragmentIntera
 import com.kote.martin.wats.model.ForumQuestion
 import com.squareup.picasso.Picasso
 
-import kotlinx.android.synthetic.main.fragment_forumquestion.view.*
+import kotlinx.android.synthetic.main.list_item_forum_question.view.*
 import java.util.*
 
-/**
- * [RecyclerView.Adapter] that can display a [DummyItem] and makes a call to the
- * specified [OnListFragmentInteractionListener].
- * TODO: Replace the implementation with code for your data type.
- */
 class ForumQuestionRecyclerViewAdapter(
         private val mListener: OnListFragmentInteractionListener?)
     : RecyclerView.Adapter<ForumQuestionRecyclerViewAdapter.ViewHolder>() {
@@ -41,7 +36,7 @@ class ForumQuestionRecyclerViewAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.fragment_forumquestion, parent, false)
+                .inflate(R.layout.list_item_forum_question, parent, false)
         return ViewHolder(view)
     }
 

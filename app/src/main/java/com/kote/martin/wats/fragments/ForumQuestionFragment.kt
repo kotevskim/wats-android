@@ -14,8 +14,6 @@ import android.view.ViewGroup
 import com.kote.martin.wats.R
 import com.kote.martin.wats.adapters.ForumQuestionRecyclerViewAdapter
 import com.kote.martin.wats.model.ForumQuestion
-import com.kote.martin.wats.model.Item
-import com.kote.martin.wats.model.Review
 import com.kote.martin.wats.presentation.MyViewModel
 
 /**
@@ -25,9 +23,7 @@ import com.kote.martin.wats.presentation.MyViewModel
  */
 class ForumQuestionFragment : Fragment() {
 
-    // TODO: Customize parameters
     private var columnCount = 1
-
     private var listener: OnListFragmentInteractionListener? = null
     private var questionsAdapter: ForumQuestionRecyclerViewAdapter? = null
 
@@ -47,7 +43,7 @@ class ForumQuestionFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_forumquestion_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_forum_question_list, container, false)
 
         // Set the questionsAdapter
         if (view is RecyclerView) {
@@ -88,16 +84,13 @@ class ForumQuestionFragment : Fragment() {
      * for more information.
      */
     interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        fun onListFragmentInteraction(item: Item?)
+        fun onListFragmentInteraction(forumQuestion: ForumQuestion)
     }
 
     companion object {
 
-        // TODO: Customize parameter argument names
         const val ARG_COLUMN_COUNT = "column-count"
 
-        // TODO: Customize parameter initialization
         @JvmStatic
         fun newInstance(columnCount: Int) =
                 ForumQuestionFragment().apply {

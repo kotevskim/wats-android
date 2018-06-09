@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Wats</string>
+    <string name="app_name">Work and Travel Society</string>
     <string name="title_reviews">Reviews</string>
     <string name="title_forum">Forum</string>
     <string name="title_events">Events</string>
@@ -7,4 +7,11 @@
     <string name="wats_api_secured_path">http://localhost:8080/api</string>
     <string name="wats_api_public_path">https://demo2452597.mockable.io/api/public/</string>
     <string name="connection_problem">Could not connect to the server, check you internet connection</string>
+
+    <string name="def_person_name">Name</string>
+    <string name="def_date">date</string>
+    <string name="def_desc">Some description</string>
+
+    <string name="comments">Comments:</string>
+    <string name="answers">Answers:</string>
 </resources>

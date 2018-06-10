@@ -44,7 +44,7 @@ class MyViewModel(app: Application) : AndroidViewModel(app) {
                     }
 
                     override fun onNext(value: List<Review>) {
-                        reviews?.value = value
+                        reviews.value = value
                     }
 
                     override fun onError(e: Throwable?) {

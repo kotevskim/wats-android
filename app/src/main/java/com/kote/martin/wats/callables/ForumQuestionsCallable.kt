@@ -8,7 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.Callable
 
-class ForumQuestionsCallable(val apiBasePath: String) : Callable<List<ForumQuestion>> {
+class ForumQuestionsCallable(val apiBasePath: String, val locationId: Long) : Callable<List<ForumQuestion>> {
 
     override fun call(): List<ForumQuestion>? {
         try {
@@ -17,7 +17,7 @@ class ForumQuestionsCallable(val apiBasePath: String) : Callable<List<ForumQuest
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
             val api = retrofit.create(WatsApi::class.java)
-            val call: Call<Page<ForumQuestion>> = api.getForumQuestionsForLocation(1L)
+            val call: Call<Page<ForumQuestion>> = api.getForumQuestionsForLocation(locationId)
             return call.execute()?.body()?.content
         } catch (e: Exception) {
             e.printStackTrace()

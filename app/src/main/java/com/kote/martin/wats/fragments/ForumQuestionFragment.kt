@@ -14,7 +14,9 @@ import android.view.ViewGroup
 import com.kote.martin.wats.R
 import com.kote.martin.wats.adapters.ForumQuestionRecyclerViewAdapter
 import com.kote.martin.wats.model.ForumQuestion
+import com.kote.martin.wats.model.Place
 import com.kote.martin.wats.presentation.MyViewModel
+import com.kote.martin.wats.presentation.MyViewModelFactory
 
 /**
  * A fragment representing a list of Items.
@@ -24,6 +26,7 @@ import com.kote.martin.wats.presentation.MyViewModel
 class ForumQuestionFragment : Fragment() {
 
     private var columnCount = 1
+    private var place: Place? = null
     private var listener: OnListFragmentInteractionListener? = null
     private var questionsAdapter: ForumQuestionRecyclerViewAdapter? = null
 
@@ -32,10 +35,13 @@ class ForumQuestionFragment : Fragment() {
 
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
+            place = it.getParcelable(ReviewsFragment.ARG_PARENT)
         }
 
         questionsAdapter = ForumQuestionRecyclerViewAdapter(listener)
-        val mViewModel: MyViewModel = ViewModelProviders.of(activity!!).get(MyViewModel::class.java)
+        val mViewModel: MyViewModel
+                = ViewModelProviders.of(activity!!, MyViewModelFactory(activity!!.application, place!!.id))
+                .get(MyViewModel::class.java)
         mViewModel.getQuestions().observe(this, Observer<List<ForumQuestion>> {
             if (it != null) questionsAdapter?.setData(it)
         })
@@ -90,12 +96,14 @@ class ForumQuestionFragment : Fragment() {
     companion object {
 
         const val ARG_COLUMN_COUNT = "column-count"
+        const val ARG_PARENT = "parent"
 
         @JvmStatic
-        fun newInstance(columnCount: Int) =
+        fun newInstance(columnCount: Int, place: Place) =
                 ForumQuestionFragment().apply {
                     arguments = Bundle().apply {
                         putInt(ARG_COLUMN_COUNT, columnCount)
+                        putParcelable(ARG_PARENT, place)
                     }
                 }
     }

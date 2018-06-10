@@ -20,4 +20,7 @@ interface WatsApi {
     @GET("locations/{locationId}/forum/questions/{questionId}/answers")
     fun getAnswersForForumQuestion(@Path("locationId") locationId: Long,
                           @Path("questionId") questionId: Long): Call<Page<ForumAnswer>>
+
+    @GET("locations")
+    fun getLocations(): Call<List<Place>>
 }

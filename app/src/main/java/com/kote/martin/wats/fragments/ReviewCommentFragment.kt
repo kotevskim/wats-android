@@ -15,16 +15,19 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.kote.martin.wats.R
 import com.kote.martin.wats.adapters.ReviewCommentRecyclerViewAdapter
+import com.kote.martin.wats.model.Place
 import com.kote.martin.wats.model.Review
 
 import com.kote.martin.wats.model.ReviewComment
 import com.kote.martin.wats.presentation.MyViewModel
+import com.kote.martin.wats.presentation.MyViewModelFactory
 import com.squareup.picasso.Picasso
 
 class ReviewCommentFragment : Fragment() {
 
     private var columnCount = 1
     private var review: Review? = null
+    private var place: Place? = null
 
     private var reviewCommentsAdapter: ReviewCommentRecyclerViewAdapter? = null
 
@@ -34,10 +37,13 @@ class ReviewCommentFragment : Fragment() {
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
             review = it.getParcelable(ARG_PARENT)
+            place = it.getParcelable(ARG_PLACE)
         }
 
         reviewCommentsAdapter = ReviewCommentRecyclerViewAdapter()
-        val mViewModel: MyViewModel = ViewModelProviders.of(activity!!).get(MyViewModel::class.java)
+        val mViewModel: MyViewModel
+                = ViewModelProviders.of(activity!!, MyViewModelFactory(activity!!.application, place!!.id))
+                .get(MyViewModel::class.java)
         mViewModel.getReviewCommentsForReview(review?.id!!).observe(this, Observer<List<ReviewComment>> {
             if (it != null) reviewCommentsAdapter?.setData(it)
         })
@@ -86,13 +92,15 @@ class ReviewCommentFragment : Fragment() {
 
         const val ARG_COLUMN_COUNT = "column-count"
         const val ARG_PARENT = "parent"
+        const val ARG_PLACE = "place"
 
         @JvmStatic
-        fun newInstance(columnCount: Int, review: Review) =
+        fun newInstance(columnCount: Int, review: Review, place: Place) =
                 ReviewCommentFragment().apply {
                     arguments = Bundle().apply {
                         putInt(ARG_COLUMN_COUNT, columnCount)
                         putParcelable(ARG_PARENT, review)
+                        putParcelable(ARG_PLACE, place)
                     }
                 }
     }

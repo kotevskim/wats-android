@@ -8,7 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.Callable
 
-class ReviewsCallable(private val apiBasePath: String) : Callable<List<Review>> {
+class ReviewsCallable(private val apiBasePath: String, val locationId: Long) : Callable<List<Review>> {
 
     override fun call(): List<Review>? {
         try {
@@ -17,7 +17,7 @@ class ReviewsCallable(private val apiBasePath: String) : Callable<List<Review>> 
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
             val api = retrofit.create(WatsApi::class.java)
-            val call: Call<Page<Review>>? = api.getReviewsForLocation(1L)
+            val call: Call<Page<Review>>? = api.getReviewsForLocation(locationId)
             return call?.execute()?.body()?.content
         } catch (e: Exception) {
             e.printStackTrace()

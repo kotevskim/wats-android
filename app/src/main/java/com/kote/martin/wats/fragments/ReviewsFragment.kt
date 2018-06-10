@@ -13,9 +13,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.kote.martin.wats.R
 import com.kote.martin.wats.adapters.ReviewsRecyclerViewAdapter
+import com.kote.martin.wats.model.Place
 
 import com.kote.martin.wats.model.Review
 import com.kote.martin.wats.presentation.MyViewModel
+import com.kote.martin.wats.presentation.MyViewModelFactory
 
 /**
  * A fragment representing a list of Items.
@@ -25,6 +27,7 @@ import com.kote.martin.wats.presentation.MyViewModel
 class ReviewsFragment : Fragment() {
 
     private var columnCount = 1
+    private var place: Place? = null
     private var reviewsAdapter: ReviewsRecyclerViewAdapter? = null
     private var listener: OnListFragmentInteractionListener? = null
 
@@ -33,10 +36,13 @@ class ReviewsFragment : Fragment() {
 
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
+            place = it.getParcelable(ARG_PARENT)
         }
 
         reviewsAdapter = ReviewsRecyclerViewAdapter(listener, context)
-        val mViewModel: MyViewModel = ViewModelProviders.of(activity!!).get(MyViewModel::class.java)
+        val mViewModel: MyViewModel
+                = ViewModelProviders.of(activity!!, MyViewModelFactory(activity!!.application, place!!.id))
+                .get(MyViewModel::class.java)
         mViewModel.getReviews().observe(this, Observer<List<Review>> {
             if (it != null) reviewsAdapter?.setData(it)
         })
@@ -91,12 +97,14 @@ class ReviewsFragment : Fragment() {
     companion object {
 
         const val ARG_COLUMN_COUNT = "column-count"
+        const val ARG_PARENT = "parent"
 
         @JvmStatic
-        fun newInstance(columnCount: Int) =
+        fun newInstance(columnCount: Int, place: Place) =
                 ReviewsFragment().apply {
                     arguments = Bundle().apply {
                         putInt(ARG_COLUMN_COUNT, columnCount)
+                        putParcelable(ARG_PARENT, place)
                     }
                 }
     }

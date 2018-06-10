@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.view.View
 import android.widget.ArrayAdapter
 import com.kote.martin.wats.R
-import com.kote.martin.wats.model.Location
+import com.kote.martin.wats.model.Place
 
 
-class LocationListViewAdapter(context: Context, locations: ArrayList<Location>) : ArrayAdapter<Location>(context, 0, locations) {
+class PlaceListViewAdapter(context: Context) : ArrayAdapter<Place>(context, 0) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         var convertView = convertView
@@ -28,4 +28,6 @@ class LocationListViewAdapter(context: Context, locations: ArrayList<Location>) 
         // Return the completed view to render on screen
         return convertView
     }
+
+
 }

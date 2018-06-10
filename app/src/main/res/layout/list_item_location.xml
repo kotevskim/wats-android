@@ -6,15 +6,16 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="4dp"
     android:layout_marginTop="4dp"
-    android:background="@drawable/border_bottom"
     android:color="@color/colorAccent"
     android:paddingBottom="15dp"
     android:paddingEnd="10dp"
-    android:paddingStart="5dp"
+    android:paddingStart="15dp"
     android:paddingTop="5dp">
     
     <TextView
         android:id="@+id/location_name"
+        android:layout_centerVertical="true"
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"

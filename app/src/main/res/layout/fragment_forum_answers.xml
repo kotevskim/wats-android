@@ -3,14 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:name="com.kote.martin.wats.fragments.ForumAnswerFragment"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/forum_answer_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:background="@color/colorPrimary"
+        android:paddingBottom="16dp"
+        android:paddingEnd="8dp"
+        android:paddingStart="8dp"
+        android:paddingTop="16dp">
 
         <ImageView
             android:id="@+id/forum_question_details_person_photo"
@@ -28,7 +33,7 @@
             android:layout_marginEnd="10dp"
             android:layout_toEndOf="@+id/forum_question_details_person_photo"
             android:text="@string/def_person_name"
-            android:textColor="@color/dark_grey"
+            android:textColor="@color/light"
             android:textSize="@dimen/text_size_large"
             android:textStyle="bold" />
 
@@ -46,7 +51,7 @@
             android:layout_alignTop="@+id/forum_question_details_person_photo"
             android:layout_marginEnd="16dp"
             android:layout_toEndOf="@+id/forum_question_details_person_name"
-            android:color="@color/implicit"
+            android:textColor="@color/implicit"
             android:gravity="end"
             android:text="@string/def_date"
             android:textSize="@dimen/text_size_small"
@@ -59,22 +64,17 @@
             android:layout_alignStart="@id/forum_question_details_person_name"
             android:layout_below="@+id/forum_question_details_person_name"
             android:text="@string/def_desc"
-            android:textColor="@color/dark_grey"
+            android:textColor="@color/light"
             android:textSize="@dimen/text_size_medium" />
 
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/forum_question_details_answers"
+        android:id="@+id/tmp1"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="1dp"
         android:layout_below="@+id/forum_answer_holder"
-        android:layout_marginBottom="10dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="5dp"
-        android:text="@string/answers"
-        android:textSize="@dimen/text_size_large"
-        android:textStyle="bold" />
+        android:visibility="invisible" />
 
     <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -82,7 +82,10 @@
         android:id="@+id/rv_forum_question_answers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/forum_question_details_answers"
+        android:layout_below="@+id/tmp1"
+        android:background="@color/colorPrimaryDark"
+        android:padding="16dp"
+        android:layout_marginBottom="50dp"
         tools:context=".fragments.ForumAnswersFragment"
         tools:listitem="@layout/list_item_forum_answer" />
 </RelativeLayout>

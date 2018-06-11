@@ -1,6 +1,7 @@
 package com.kote.martin.wats
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 
 import android.widget.ArrayAdapter
@@ -17,6 +18,9 @@ import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import android.graphics.drawable.ColorDrawable
+
+
 
 
 class SearchableActivity : AppCompatActivity() {

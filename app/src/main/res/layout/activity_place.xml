@@ -29,4 +29,47 @@
         tools:layout_editor_absoluteY="16dp"
         tools:ignore="MissingConstraints">
     </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/content_new"
+        android:layout_marginBottom="70dp"
+        android:layout_marginEnd="16dp"/>
+
+    <LinearLayout
+        android:id="@+id/post"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/light"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/post_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/light"
+            android:layout_weight="1"
+            android:hint="Free your thoughts..." >
+        </EditText>
+
+        <TextView
+            android:textSize="@dimen/text_size_small"
+            android:id="@+id/submit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:drawableEnd="@drawable/social_send_now">
+        </TextView>
+    </LinearLayout>
+
+
+
+
 </android.support.constraint.ConstraintLayout>

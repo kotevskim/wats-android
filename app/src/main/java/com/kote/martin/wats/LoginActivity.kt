@@ -23,8 +23,16 @@ import android.widget.TextView
 
 import java.util.ArrayList
 import android.Manifest.permission.READ_CONTACTS
+import android.app.Activity
+import android.content.Context
+import com.kote.martin.wats.model.LoginCredentials
+import com.kote.martin.wats.model.User
+import com.kote.martin.wats.web.WatsApi
 
 import kotlinx.android.synthetic.main.activity_login.*
+import retrofit2.Call
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  * A login screen that offers login via email/password.
@@ -143,7 +151,8 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
     private fun isEmailValid(email: String): Boolean {
         //TODO: Replace this with your own logic
-        return email.contains("@")
+//        return email.contains("@")
+        return true
     }
 
     private fun isPasswordValid(password: String): Boolean {
@@ -239,26 +248,28 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    inner class UserLoginTask internal constructor(private val mEmail: String, private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
+    inner class UserLoginTask internal constructor(private val username: String, private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
+
+        var user: User? = null
 
         override fun doInBackground(vararg params: Void): Boolean? {
-            // TODO: attempt authentication against a network service.
 
+            var isSuccess: Boolean
+            val credentials = LoginCredentials(username, mPassword)
             try {
-                // Simulate network access.
-                Thread.sleep(2000)
-            } catch (e: InterruptedException) {
-                return false
+                val retrofit = Retrofit.Builder()
+                        .baseUrl(getString(R.string.wats_api_public_path))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build()
+                val api = retrofit.create(WatsApi::class.java)
+                val call: Call<User>? = api.login(credentials)
+                user = call?.execute()?.body()
+                isSuccess = true
+            } catch (e: Exception) {
+                e.printStackTrace()
+                isSuccess = false
             }
-
-            return DUMMY_CREDENTIALS
-                    .map { it.split(":") }
-                    .firstOrNull { it[0] == mEmail }
-                    ?.let {
-                        // Account exists, return true if the password matches.
-                        it[1] == mPassword
-                    }
-                    ?: true
+            return isSuccess
         }
 
         override fun onPostExecute(success: Boolean?) {
@@ -266,6 +277,16 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             showProgress(false)
 
             if (success!!) {
+                val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+                with (sharedPref.edit()) {
+                    putString(getString(R.string.preference_logged_username), user?.username)
+                    putString(getString(R.string.preference_logged_name), user?.name)
+                    putString(getString(R.string.preference_logged_email), user?.email)
+                    putString(getString(R.string.preference_logged_picture_url), user?.pictureUrl)
+                    putLong(getString(R.string.preference_logged_id), user?.id!!)
+                    commit()
+                }
+                setResult(Activity.RESULT_OK)
                 finish()
             } else {
                 password.error = getString(R.string.error_incorrect_password)

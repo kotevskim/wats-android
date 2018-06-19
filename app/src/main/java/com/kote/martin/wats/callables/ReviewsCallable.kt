@@ -11,17 +11,17 @@ import java.util.concurrent.Callable
 class ReviewsCallable(private val apiBasePath: String, val locationId: Long) : Callable<List<Review>> {
 
     override fun call(): List<Review>? {
-        try {
+        return try {
             val retrofit = Retrofit.Builder()
                     .baseUrl(apiBasePath)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
             val api = retrofit.create(WatsApi::class.java)
             val call: Call<Page<Review>>? = api.getReviewsForLocation(locationId)
-            return call?.execute()?.body()?.content
+            call?.execute()?.body()?.content
         } catch (e: Exception) {
             e.printStackTrace()
-            return null;
+            null
         }
     }
 }

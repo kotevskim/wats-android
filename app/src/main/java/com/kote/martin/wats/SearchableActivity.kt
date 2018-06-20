@@ -23,7 +23,7 @@ import android.graphics.drawable.ColorDrawable
 
 
 
-class SearchableActivity : AppCompatActivity() {
+class SearchableActivity : BaseActivity() {
 
     private var adapter: ArrayAdapter<Place>? = null
     private var listView: ListView? = null
@@ -91,16 +91,4 @@ class SearchableActivity : AppCompatActivity() {
                     }
                 })
     }
-
-//    override fun onNewIntent(intent: Intent) {
-//        setIntent(intent)
-//        handleIntent(intent)
-//    }
-//
-//    private fun handleIntent(intent: Intent) {
-//        if (Intent.ACTION_SEARCH == intent.action) {
-//            val query = intent.getStringExtra(SearchManager.QUERY)
-//            performPlaceSearch(query)
-//        }
-//    }
 }

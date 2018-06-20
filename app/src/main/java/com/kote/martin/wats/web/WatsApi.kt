@@ -2,10 +2,7 @@ package com.kote.martin.wats.web
 
 import com.kote.martin.wats.model.*
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface WatsApi {
 
@@ -28,21 +25,25 @@ interface WatsApi {
 
     @POST("locations/{locationId}/reviews")
     fun postReview(@Path("locationId") id: Long,
-                   @Body reviewRequest: ReviewRequest) : Call<Review>
+                   @Body reviewRequest: ReviewRequest,
+                   @Header("Authorization") jwt: String) : Call<Review>
 
     @POST("locations/{locationId}/reviews/{reviewId}/comments")
     fun postReviewComment(@Path("locationId") locationId: Long,
                           @Path("reviewId") reviewId: Long,
-                          @Body reviewRequest: ReviewRequest) : Call<ReviewComment>
+                          @Body reviewRequest: ReviewRequest,
+                          @Header("Authorization") jwt: String) : Call<ReviewComment>
 
     @POST("locations/{locationId}/forum/questions")
     fun postForumQuestion(@Body questionRequest: QuestionRequest,
-                          @Path("locationId") id: Long): Call<ForumQuestion>
+                          @Path("locationId") id: Long,
+                          @Header("Authorization") jwt: String): Call<ForumQuestion>
 
     @POST("locations/{locationId}/forum/questions/{questionId}/answers")
     fun postForumAnswer(@Path("locationId") locationId: Long,
                         @Path("questionId") questionId: Long,
-                        @Body answerRequest: AnswerRequest) : Call<ForumAnswer>
+                        @Body answerRequest: AnswerRequest,
+                        @Header("Authorization") jwt: String) : Call<ForumAnswer>
 
     @POST("login")
     fun login(@Body credentials: LoginCredentials) : Call<User>

@@ -75,9 +75,13 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             return true
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(email, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-                    .setAction(android.R.string.ok,
-                            { requestPermissions(arrayOf(READ_CONTACTS), REQUEST_READ_CONTACTS) })
+            Snackbar.make(
+                    email,
+                    R.string.permission_rationale,
+                    Snackbar.LENGTH_INDEFINITE)
+                    .setAction(android.R.string.ok) {
+                        requestPermissions(arrayOf(READ_CONTACTS), REQUEST_READ_CONTACTS)
+                    }
         } else {
             requestPermissions(arrayOf(READ_CONTACTS), REQUEST_READ_CONTACTS)
         }
@@ -130,7 +134,7 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
             email.error = getString(R.string.error_field_required)
             focusView = email
             cancel = true
-        } else if (!isEmailValid(emailStr)) {
+        } else if (!isUsernameValid(emailStr)) {
             email.error = getString(R.string.error_invalid_email)
             focusView = email
             cancel = true
@@ -149,9 +153,8 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         }
     }
 
-    private fun isEmailValid(email: String): Boolean {
+    private fun isUsernameValid(username: String): Boolean {
         //TODO: Replace this with your own logic
-//        return email.contains("@")
         return true
     }
 
@@ -248,9 +251,12 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    inner class UserLoginTask internal constructor(private val username: String, private val mPassword: String) : AsyncTask<Void, Void, Boolean>() {
+    inner class UserLoginTask internal constructor(private val username: String,
+                                                   private val mPassword: String)
+        : AsyncTask<Void, Void, Boolean>() {
 
-        var user: User? = null
+        private var user: User? = null
+        private var jwt: String? = null
 
         override fun doInBackground(vararg params: Void): Boolean? {
 
@@ -263,7 +269,11 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
                         .build()
                 val api = retrofit.create(WatsApi::class.java)
                 val call: Call<User>? = api.login(credentials)
-                user = call?.execute()?.body()
+
+                val response = call?.execute()
+                this.user = response?.body()
+                this.jwt = response?.headers()?.get("Authorization")
+
                 isSuccess = true
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -278,13 +288,14 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
 
             if (success!!) {
                 val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
-                with (sharedPref.edit()) {
+                with(sharedPref.edit()) {
                     putString(getString(R.string.preference_logged_username), user?.username)
                     putString(getString(R.string.preference_logged_name), user?.name)
                     putString(getString(R.string.preference_logged_email), user?.email)
                     putString(getString(R.string.preference_logged_picture_url), user?.pictureUrl)
                     putLong(getString(R.string.preference_logged_id), user?.id!!)
-                    commit()
+                    putString(getString(R.string.preference_jwt), jwt)
+                    apply()
                 }
                 setResult(Activity.RESULT_OK)
                 finish()
@@ -305,12 +316,6 @@ class LoginActivity : AppCompatActivity(), LoaderCallbacks<Cursor> {
         /**
          * Id to identity READ_CONTACTS permission request.
          */
-        private val REQUEST_READ_CONTACTS = 0
-
-        /**
-         * A dummy authentication store containing known user names and passwords.
-         * TODO: remove after connecting to a real authentication system.
-         */
-        private val DUMMY_CREDENTIALS = arrayOf("foo@example.com:hello", "bar@example.com:world")
+        private const val REQUEST_READ_CONTACTS = 0
     }
 }

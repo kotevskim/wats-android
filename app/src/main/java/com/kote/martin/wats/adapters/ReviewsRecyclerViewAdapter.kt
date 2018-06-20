@@ -73,7 +73,7 @@ class ReviewsRecyclerViewAdapter(
 
 
     inner class ViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val idView: TextView = mView.item_id
+        val idView: TextView = mView.place_id
         val personNameView: TextView = mView.person_name
         val personPhotoView: ImageView = mView.person_photo
         val dateView: TextView = mView.date

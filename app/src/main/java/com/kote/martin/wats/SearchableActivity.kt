@@ -1,24 +1,22 @@
 package com.kote.martin.wats
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 
 import android.widget.ArrayAdapter
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.text.TextUtils
 import android.widget.ListView
 import android.widget.Toast
 import com.kote.martin.wats.adapters.PlaceListViewAdapter
-import com.kote.martin.wats.callables.PlacesCallable
+import com.kote.martin.wats.async.rest.get.PlacesCallable
 import com.kote.martin.wats.model.Place
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import android.graphics.drawable.ColorDrawable
+import android.widget.TextView
 
 
 
@@ -41,9 +39,12 @@ class SearchableActivity : BaseActivity() {
         listView = findViewById(R.id.list_search_result)
         adapter = PlaceListViewAdapter(this)
         listView?.adapter = adapter
-        listView?.setOnItemClickListener { _, _, position, _ ->
+        listView?.setOnItemClickListener { _, view, _, _ ->
+            val v = view.findViewById(R.id.place_id) as TextView
+            val placeId =  v.text.toString().toLong()
             val intent = Intent(this, PlaceActivity::class.java).apply {
-                putExtra(PLACE, places[position])
+               val place = places.find { it -> it.id == placeId }
+                putExtra(PLACE, place)
             }
             startActivity(intent)
         }

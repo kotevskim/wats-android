@@ -26,9 +26,9 @@ import com.kote.martin.wats.presentation.MyViewModelFactory
 class ForumQuestionFragment : Fragment() {
 
     private var columnCount = 1
-    private var place: Place? = null
     private var listener: OnListFragmentInteractionListener? = null
     private var questionsAdapter: ForumQuestionRecyclerViewAdapter? = null
+    var place: Place? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

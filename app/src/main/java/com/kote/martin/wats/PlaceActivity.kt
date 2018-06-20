@@ -10,14 +10,21 @@ import com.kote.martin.wats.fragments.ForumAnswersFragment
 import com.kote.martin.wats.fragments.ForumQuestionFragment
 import com.kote.martin.wats.fragments.ReviewCommentFragment
 import com.kote.martin.wats.fragments.ReviewsFragment
-import com.kote.martin.wats.model.ForumQuestion
-import com.kote.martin.wats.model.Place
-import com.kote.martin.wats.model.Review
 import kotlinx.android.synthetic.main.activity_place.*
 import android.support.design.widget.Snackbar
 import android.support.design.widget.FloatingActionButton
+import android.support.v4.media.MediaBrowserCompat
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.*
+import com.kote.martin.wats.async.rest.get.ReviewsCallable
+import com.kote.martin.wats.async.rest.post.ItemCallable
+import com.kote.martin.wats.model.*
+import io.reactivex.Observable
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 
 class PlaceActivity :
         BaseActivity(),
@@ -98,17 +105,72 @@ class PlaceActivity :
         val submitBtn = findViewById<TextView>(R.id.submit_button)
         submitBtn.setOnClickListener { view ->
             if (!isNetworkAvailable()) {
-                Snackbar.make(view, "Please connect to the internet to perform this action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, getString(R.string.connect_to_internet_to_perform), Snackbar.LENGTH_SHORT)
                         .setAction("Action", null).show()
-            } else {
-                val fragment: Fragment = supportFragmentManager.findFragmentByTag(activeFragment)
-                if (fragment.isVisible) {
-                    Snackbar.make(view, activeFragment, Snackbar.LENGTH_SHORT)
-                            .setAction("Action", null).show()
-                }
+                return@setOnClickListener
+            }
+            if (!isUserLoggedIn()) {
+                Snackbar.make(view, getString(R.string.login_to_perform_msg), Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show()
+                return@setOnClickListener
+            }
+            val desc = findViewById<EditText>(R.id.post_text).text.toString()
+            val f: Fragment = supportFragmentManager.findFragmentByTag(activeFragment)
+            if (f is ReviewsFragment) {
+                postItem(f.place!!.id, null, desc, Review::class.java)
+            }
+            if (f is ReviewCommentFragment) {
+                postItem(f.place!!.id, f.review?.id, desc, ReviewComment::class.java)
+            }
+            if (f is ForumQuestionFragment) {
+                postItem(f.place!!.id, null, desc, ForumQuestion::class.java)
+            }
+            if (f is ForumAnswersFragment) {
+                postItem(f.place!!.id, f.question?.id, desc, ForumAnswer::class.java)
             }
         }
         setListenerToRootView()
+    }
+
+
+    private fun postItem(locationId: Long,
+                         parentId: Long?,
+                         desc: String,
+                         clazz: Class<out Item>) {
+        val callable = ItemCallable(
+                getString(R.string.wats_api_secured_path),
+                getJwt(),
+                locationId,
+                parentId,
+                desc,
+                clazz)
+        val observable = Observable.fromCallable(callable)
+        observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : Observer<Item> {
+                    override fun onSubscribe(d: Disposable?) {
+                    }
+
+                    override fun onComplete() {
+                    }
+
+                    override fun onNext(value: Item) {
+                        val x = false
+                    }
+
+                    override fun onError(e: Throwable?) {
+                        Toast.makeText(
+                                application,
+                                "Error getting server response",
+                                Toast.LENGTH_SHORT).show()
+                    }
+                })
+    }
+
+    private fun getJwt(): String {
+        return getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
+                .getString(getString(R.string.preference_jwt), null)
     }
 
     override fun onListFragmentInteraction(review: Review) {

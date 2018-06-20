@@ -13,7 +13,6 @@ import com.kote.martin.wats.model.ForumAnswer
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.list_item_forum_answer.view.*
 
-import kotlinx.android.synthetic.main.list_item_review_comment.view.*
 import java.util.*
 
 class ForumAnswerRecyclerViewAdapter

@@ -22,9 +22,10 @@ class PlaceListViewAdapter(context: Context) : ArrayAdapter<Place>(context, 0) {
         }
         // Lookup view for data population
         val tvName = convertView!!.findViewById(R.id.location_name) as TextView
-        val tvId = convertView.findViewById(R.id.item_id) as TextView
+        val tvId = convertView.findViewById(R.id.place_id) as TextView
         // Populate the data into the template view using the data object
         tvName.text = location!!.name
+        tvId.text = location!!.id.toString()
         // Return the completed view to render on screen
         return convertView
     }

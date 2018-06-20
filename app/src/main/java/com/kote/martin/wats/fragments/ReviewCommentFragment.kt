@@ -26,10 +26,9 @@ import com.squareup.picasso.Picasso
 class ReviewCommentFragment : Fragment() {
 
     private var columnCount = 1
-    private var review: Review? = null
-    private var place: Place? = null
-
     private var reviewCommentsAdapter: ReviewCommentRecyclerViewAdapter? = null
+    var review: Review? = null
+    var place: Place? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

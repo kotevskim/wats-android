@@ -32,10 +32,10 @@ import com.squareup.picasso.Picasso
 class ForumAnswersFragment : Fragment() {
 
     private var columnCount = 1
-    private var question: ForumQuestion? = null
-    private var place: Place? = null
-
     private var forumAnswersAdapter: ForumAnswerRecyclerViewAdapter? = null
+
+    var question: ForumQuestion? = null
+    var place: Place? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

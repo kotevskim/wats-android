@@ -10,15 +10,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import android.arch.lifecycle.MutableLiveData
-import com.kote.martin.wats.callables.ForumAnswersCallable
-import com.kote.martin.wats.callables.ForumQuestionsCallable
-import com.kote.martin.wats.callables.ReviewCommentsCallable
-import com.kote.martin.wats.callables.ReviewsCallable
+import com.kote.martin.wats.R
+import com.kote.martin.wats.async.rest.get.ForumAnswersCallable
+import com.kote.martin.wats.async.rest.get.ForumQuestionsCallable
+import com.kote.martin.wats.async.rest.get.ReviewCommentsCallable
+import com.kote.martin.wats.async.rest.get.ReviewsCallable
 import com.kote.martin.wats.model.ForumAnswer
 import com.kote.martin.wats.model.ForumQuestion
 import com.kote.martin.wats.model.ReviewComment
 
-class MyViewModel(app: Application, private val placeId: Long) : AndroidViewModel(app) {
+class MyViewModel(val app: Application, private val placeId: Long) : AndroidViewModel(app) {
 
     private var reviews: MutableLiveData<List<Review>> = MutableLiveData()
     private var reviewComments: MutableLiveData<List<ReviewComment>> = MutableLiveData()
@@ -33,7 +34,7 @@ class MyViewModel(app: Application, private val placeId: Long) : AndroidViewMode
     private fun loadReviews() {
         val reviewsObservable: Observable<List<Review>>
                 = Observable.fromCallable(ReviewsCallable(
-                "https://demo2452597.mockable.io/api/public/", placeId))
+                app.getString(R.string.wats_api_public_path), placeId))
         reviewsObservable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -66,7 +67,7 @@ class MyViewModel(app: Application, private val placeId: Long) : AndroidViewMode
     private fun loadReviewCommentsForReview(reviewId: Long) {
         val reviewsObservable: Observable<List<ReviewComment>>
                 = Observable.fromCallable(ReviewCommentsCallable(
-                "https://demo2452597.mockable.io/api/public/",
+                app.getString(R.string.wats_api_public_path),
                 placeId,
                 reviewId))
         reviewsObservable
@@ -100,7 +101,7 @@ class MyViewModel(app: Application, private val placeId: Long) : AndroidViewMode
     private fun loadQuestions() {
         val reviewsObservable: Observable<List<ForumQuestion>>
                 = Observable.fromCallable(ForumQuestionsCallable(
-                "https://demo2452597.mockable.io/api/public/",
+                app.getString(R.string.wats_api_public_path),
                 placeId))
         reviewsObservable
                 .subscribeOn(Schedulers.io())
@@ -134,7 +135,7 @@ class MyViewModel(app: Application, private val placeId: Long) : AndroidViewMode
     private fun loadAnswersForForumQuestion(questionId: Long) {
         val reviewsObservable: Observable<List<ForumAnswer>>
                 = Observable.fromCallable(ForumAnswersCallable(
-                "https://demo2452597.mockable.io/api/public/", placeId, questionId))
+                app.getString(R.string.wats_api_public_path), placeId, questionId))
         reviewsObservable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

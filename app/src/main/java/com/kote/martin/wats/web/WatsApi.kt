@@ -1,22 +1,29 @@
 package com.kote.martin.wats.web
 
 import com.kote.martin.wats.model.*
+import com.kote.martin.wats.web.request.AnswerRequest
+import com.kote.martin.wats.web.request.QuestionRequest
+import com.kote.martin.wats.web.request.ReviewRequest
 import retrofit2.Call
 import retrofit2.http.*
 
 interface WatsApi {
 
-    @GET("locations/{locationId}/reviews")
+    // TODO refactor, it is hardcoded
+    @GET("locations/{locationId}/reviews?size=100&sort=datePublished,desc")
     fun getReviewsForLocation(@Path("locationId") id: Long): Call<Page<Review>>
 
-    @GET("locations/{locationId}/reviews/{reviewId}/comments")
+    // TODO refactor, it is hardcoded
+    @GET("locations/{locationId}/reviews/{reviewId}/comments?size=100&sort=datePublished,desc")
     fun getReviewComments(@Path("locationId") locationId: Long,
                           @Path("reviewId") reviewId: Long): Call<Page<ReviewComment>>
 
-    @GET("locations/{locationId}/forum/questions")
+    // TODO refactor, it is hardcoded
+    @GET("locations/{locationId}/forum/questions?size=100&sort=datePublished,desc")
     fun getForumQuestionsForLocation(@Path("locationId") id: Long): Call<Page<ForumQuestion>>
 
-    @GET("locations/{locationId}/forum/questions/{questionId}/answers")
+    // TODO refactor, it is hardcoded
+    @GET("locations/{locationId}/forum/questions/{questionId}/answers?size=100&sort=datePublished,desc")
     fun getAnswersForForumQuestion(@Path("locationId") locationId: Long,
                                    @Path("questionId") questionId: Long): Call<Page<ForumAnswer>>
 
@@ -25,30 +32,26 @@ interface WatsApi {
 
     @POST("locations/{locationId}/reviews")
     fun postReview(@Path("locationId") id: Long,
-                   @Body reviewRequest: ReviewRequest,
-                   @Header("Authorization") jwt: String) : Call<Review>
+                   @Body description: String,
+                   @Header("Authorization") jwt: String): Call<Review>?
 
     @POST("locations/{locationId}/reviews/{reviewId}/comments")
     fun postReviewComment(@Path("locationId") locationId: Long,
                           @Path("reviewId") reviewId: Long,
-                          @Body reviewRequest: ReviewRequest,
-                          @Header("Authorization") jwt: String) : Call<ReviewComment>
+                          @Body description: String,
+                          @Header("Authorization") jwt: String): Call<ReviewComment>?
 
     @POST("locations/{locationId}/forum/questions")
-    fun postForumQuestion(@Body questionRequest: QuestionRequest,
-                          @Path("locationId") id: Long,
-                          @Header("Authorization") jwt: String): Call<ForumQuestion>
+    fun postForumQuestion(@Path("locationId") id: Long,
+                          @Body question: String,
+                          @Header("Authorization") jwt: String): Call<ForumQuestion>?
 
     @POST("locations/{locationId}/forum/questions/{questionId}/answers")
     fun postForumAnswer(@Path("locationId") locationId: Long,
                         @Path("questionId") questionId: Long,
-                        @Body answerRequest: AnswerRequest,
-                        @Header("Authorization") jwt: String) : Call<ForumAnswer>
+                        @Body answer: String,
+                        @Header("Authorization") jwt: String): Call<ForumAnswer>?
 
     @POST("login")
-    fun login(@Body credentials: LoginCredentials) : Call<User>
+    fun login(@Body credentials: LoginCredentials): Call<User>
 }
-
-class ReviewRequest(val description: String)
-class QuestionRequest(val question: String)
-class AnswerRequest(val answer: String)

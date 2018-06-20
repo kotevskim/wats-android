@@ -87,6 +87,6 @@
         android:layout_marginBottom="50dp"
         android:background="@color/colorPrimaryDark"
         android:padding="16dp"
-        tools:context=".fragments.ReviewCommentFragment"
+        tools:context=".fragment.ReviewCommentFragment"
         tools:listitem="@layout/list_item_review_comment" />
 </RelativeLayout>

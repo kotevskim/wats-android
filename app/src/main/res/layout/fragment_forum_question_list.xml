@@ -9,5 +9,5 @@
     android:layout_marginBottom="50dp"
     android:background="@color/colorPrimary"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".fragments.ForumQuestionFragment"
+    tools:context=".fragment.ForumQuestionFragment"
     tools:listitem="@layout/list_item_forum_question" />

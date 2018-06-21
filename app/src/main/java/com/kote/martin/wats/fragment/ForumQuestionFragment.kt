@@ -27,7 +27,7 @@ class ForumQuestionFragment : Fragment() {
 
     private var columnCount = 1
     private var listener: OnListFragmentInteractionListener? = null
-    private var questionsAdapter: ForumQuestionRecyclerViewAdapter? = null
+    var questionsAdapter: ForumQuestionRecyclerViewAdapter? = null
     var place: Place? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -27,7 +27,7 @@ import com.kote.martin.wats.presentation.MyViewModelFactory
 class ReviewsFragment : Fragment() {
 
     private var columnCount = 1
-    private var reviewsAdapter: ReviewsRecyclerViewAdapter? = null
+    var reviewsAdapter: ReviewsRecyclerViewAdapter? = null
     private var listener: OnListFragmentInteractionListener? = null
     var place: Place? = null
 

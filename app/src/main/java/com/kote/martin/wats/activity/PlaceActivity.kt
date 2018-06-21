@@ -1,5 +1,6 @@
 package com.kote.martin.wats.activity
 
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
@@ -17,6 +18,8 @@ import android.widget.*
 import com.kote.martin.wats.R
 import com.kote.martin.wats.async.rest.post.ItemCallable
 import com.kote.martin.wats.model.*
+import com.kote.martin.wats.presentation.MyViewModel
+import com.kote.martin.wats.presentation.MyViewModelFactory
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -153,7 +156,32 @@ class PlaceActivity :
                     }
 
                     override fun onNext(value: Item) {
-                        val x = false
+                        val f: Fragment = supportFragmentManager.findFragmentByTag(activeFragment)
+                        val mViewModel: MyViewModel
+                                = ViewModelProviders.of(f, MyViewModelFactory(application, place!!.id))
+                                .get(MyViewModel::class.java)
+                        // TODO REFACTOR, FIND BETTER WAY TO NOTIFY NEW DATA
+                        if (f is ReviewsFragment) {
+                            mViewModel.getReviews().observe(f, android.arch.lifecycle.Observer<List<Review>> {
+                                if (it != null) f.reviewsAdapter?.setData(it)
+                            })
+                        }
+                        if (f is ReviewCommentFragment) {
+                            mViewModel.getReviewCommentsForReview(f.review?.id!!).observe(f, android.arch.lifecycle.Observer<List<ReviewComment>> {
+                                if (it != null) f.reviewCommentsAdapter?.setData(it)
+                            })
+                        }
+                        if (f is ForumQuestionFragment) {
+                            mViewModel.getQuestions().observe(f, android.arch.lifecycle.Observer<List<ForumQuestion>> {
+                                if (it != null) f.questionsAdapter?.setData(it)
+                            })
+                        }
+                        if (f is ForumAnswersFragment) {
+                            mViewModel.getAnswersForForumQuestion(f.question?.id!!).observe(f, android.arch.lifecycle.Observer<List<ForumAnswer>> {
+                                if (it != null) f.forumAnswersAdapter?.setData(it)
+                            })
+                        }
+                        hideSoftKeyboard(findViewById<EditText>(R.id.post_text))
                     }
 
                     override fun onError(e: Throwable?) {

@@ -73,6 +73,11 @@ open class BaseActivity : AppCompatActivity() {
         imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
     }
 
+    fun hideSoftKeyboard(view: View) {
+        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0);
+    }
+
     private fun updateToLoggedInState() {
         val sharedPref = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE)
 

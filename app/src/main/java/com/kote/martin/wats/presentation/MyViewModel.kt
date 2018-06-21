@@ -27,7 +27,8 @@ class MyViewModel(val app: Application, private val placeId: Long) : AndroidView
     private var forumAnswers: MutableLiveData<List<ForumAnswer>> = MutableLiveData()
 
     fun getReviews(): MutableLiveData<List<Review>> {
-        if (reviews.value == null) loadReviews()
+        if (reviews.value == null) // TODO always true??
+            loadReviews()
         return reviews
     }
 

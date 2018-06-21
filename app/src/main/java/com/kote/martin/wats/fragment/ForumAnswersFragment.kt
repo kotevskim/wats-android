@@ -32,7 +32,7 @@ import com.squareup.picasso.Picasso
 class ForumAnswersFragment : Fragment() {
 
     private var columnCount = 1
-    private var forumAnswersAdapter: ForumAnswerRecyclerViewAdapter? = null
+    var forumAnswersAdapter: ForumAnswerRecyclerViewAdapter? = null
 
     var question: ForumQuestion? = null
     var place: Place? = null

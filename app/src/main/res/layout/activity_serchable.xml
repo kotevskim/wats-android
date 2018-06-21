@@ -18,7 +18,7 @@
         android:layout_marginBottom="26dp"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
-        android:text="Find your next place" />
+        android:text="Where to?" />
 
     <android.support.v7.widget.SearchView
         android:id="@+id/search_bar"
